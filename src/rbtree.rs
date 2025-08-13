@@ -2523,6 +2523,14 @@ where
         }
     }
 }
+// Allow sending to another thread if the ownership of the containing
+// RBTree can be transferred to another thread.
+unsafe impl<A: Adapter> Send for IntoIter<A>
+where
+    RBTree<A>: Send,
+    A::LinkOps: RBTreeOps,
+{
+}
 
 // =============================================================================
 // Tests
